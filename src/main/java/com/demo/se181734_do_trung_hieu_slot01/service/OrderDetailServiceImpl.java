@@ -10,16 +10,35 @@ import java.util.List;
 @Service
 public class OrderDetailServiceImpl implements OrderDetailService {
     @Autowired
-    OrderDetailRepository orderDetailRepository;
+    private OrderDetailRepository orderDetailRepository;
 
     @Override
-    public List<OrderDetail> findAll() { return orderDetailRepository.findAll(); }
+    public List<OrderDetail> findAll() {
+        return orderDetailRepository.findAll();
+    }
+
     @Override
-    public OrderDetail findById(int id) { return orderDetailRepository.findById(id).orElse(null); }
+    public OrderDetail findById(int id) {
+        return orderDetailRepository.findById(id).orElse(null);
+    }
+
     @Override
-    public void save(OrderDetail orderDetail) { orderDetailRepository.save(orderDetail); }
+    public List<OrderDetail> findByOrderId(int orderId) {
+        return orderDetailRepository.findByOrderId(orderId);
+    }
+
     @Override
-    public void update(OrderDetail orderDetail) { orderDetailRepository.save(orderDetail); }
+    public void save(OrderDetail orderDetail) {
+        orderDetailRepository.save(orderDetail);
+    }
+
     @Override
-    public void delete(int id) { orderDetailRepository.deleteById(id); }
+    public void update(OrderDetail orderDetail) {
+        orderDetailRepository.save(orderDetail);
+    }
+
+    @Override
+    public void delete(int id) {
+        orderDetailRepository.deleteById(id);
+    }
 }

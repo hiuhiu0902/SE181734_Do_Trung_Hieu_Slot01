@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký - Orchid World</title>
+
+    <!-- Tải Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tải Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        .background-container {
+            background-image: url('https://images.unsplash.com/photo-1516991367-9a3521340168?q=80&w=2574&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="background-container min-h-screen flex items-center justify-center bg-gray-100 p-4">
+
+    <div class="absolute inset-0 bg-black opacity-40"></div>
+
+    <div class="relative bg-white bg-opacity-95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 md:p-12 w-full max-w-md">
+
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-purple-800">Tạo tài khoản</h1>
+            <p class="text-gray-600 mt-2">Gia nhập cộng đồng yêu hoa lan.</p>
+        </div>
+
+        <!-- Hiển thị thông báo lỗi nếu có -->
+        <div th:if="${errorMessage}" class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg" role="alert">
+            <p th:text="${errorMessage}"></p>
+        </div>
+
+        <form th:action="@{/register}" th:object="${account}" method="post" class="space-y-6">
+
+            <div>
+                <label for="accountName" class="block text-sm font-medium text-gray-700 mb-2">Họ và Tên</label>
+                <input type="text" id="accountName" th:field="*{accountName}"
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+                       placeholder="Nguyễn Văn An" required />
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <input type="email" id="email" th:field="*{email}"
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+                       placeholder="your@email.com" required />
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Mật khẩu</label>
+                <input type="password" id="password" th:field="*{password}"
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition"
+                       placeholder="••••••••" required />
+            </div>
+
+            <div>
+                <button type="submit"
+                        class="w-full bg-purple-700 text-white font-bold py-3 px-4 rounded-lg hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-transform transform hover:scale-105 shadow-lg">
+                    Đăng Ký
+                </button>
+            </div>
+        </form>
+
+        <div class="text-center text-sm text-gray-600 mt-8">
+            <p>
+                Đã có tài khoản?
+                <a th:href="@{/login}" class="font-medium text-purple-700 hover:text-purple-600">Đăng nhập ngay</a>
+            </p>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

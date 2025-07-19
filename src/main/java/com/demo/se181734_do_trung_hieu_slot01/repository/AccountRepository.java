@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account,Integer> {
+    Account findByEmail(String email);  // Tìm tài khoản theo email (hoặc tên tài khoản nếu cần)
+
 }

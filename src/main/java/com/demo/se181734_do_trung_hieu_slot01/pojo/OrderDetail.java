@@ -7,20 +7,20 @@ import jakarta.persistence.*;
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "orchid_id")
-    public Orchid orchid;
+    private Orchid orchid;
 
-    public Double price;
-    public Integer quantity;
+    private Double price;
+    private Integer quantity;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    public Order order;
+    private Order order;
 
-    // getters & setters
+    // Getters and Setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 

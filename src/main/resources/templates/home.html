@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrungHiếu Flower Shop - Trang Chủ</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles to integrate Google Fonts */
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #FFF8F5; /* A very light pink background */
+        }
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+        .btn-primary {
+            @apply bg-pink-500 text-white font-bold py-2 px-6 rounded-full hover:bg-pink-600 transition-all duration-300 ease-in-out shadow-md;
+        }
+        .btn-secondary {
+            @apply bg-white text-pink-500 border border-pink-500 font-bold py-2 px-6 rounded-full hover:bg-pink-50 hover:text-pink-600 transition-all duration-300 ease-in-out;
+        }
+        .btn-login {
+            @apply bg-transparent text-gray-600 font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-all duration-300 ease-in-out;
+        }
+        .section-title {
+            @apply text-4xl font-playfair text-gray-800 text-center mb-4 font-bold;
+        }
+        .section-subtitle {
+            @apply text-center text-gray-500 mb-12 max-w-2xl mx-auto;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+<!-- Header -->
+<header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <!-- Logo -->
+        <div class="logo">
+            <a href="#" class="text-2xl font-playfair font-bold text-gray-800">
+                TrungHiếu <span class="text-pink-500">Flower</span>
+            </a>
+        </div>
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center space-x-8">
+            <a href="#" class="text-gray-600 hover:text-pink-500 transition-colors">Trang Chủ</a>
+            <a href="#" class="text-gray-600 hover:text-pink-500 transition-colors">Giới Thiệu</a>
+            <a href="#" class="text-gray-600 hover:text-pink-500 transition-colors">Sản Phẩm</a>
+            <a href="#" class="text-gray-600 hover:text-pink-500 transition-colors">Liên Hệ</a>
+        </nav>
+        <!-- Contact & Auth Buttons -->
+        <div class="flex items-center space-x-2 sm:space-x-4">
+            <a href="tel:0988978445" class="hidden sm:flex items-center text-gray-600 hover:text-pink-500 transition-colors">
+                <i class="fas fa-phone-alt mr-2"></i> 0988 978 445
+            </a>
+
+            <!-- Logic for Login/Logout on Desktop -->
+            <div th:if="${session.user == null}" class="hidden md:inline-block">
+                <a th:href="@{/login}" class="btn-login">Đăng nhập</a>
+            </div>
+            <div th:if="${session.user != null}" class="hidden md:flex items-center space-x-3">
+                <span class="text-gray-600">Chào, <span th:text="${session.user.accountName}"></span>!</span>
+                <a th:href="@{/logout}" class="btn-secondary">Đăng xuất</a>
+            </div>
+
+            <a href="#" class="btn-primary hidden md:inline-block">Đặt Hàng</a>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 hover:text-pink-500 focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+        <a href="#" class="block py-2 text-gray-600 hover:text-pink-500">Trang Chủ</a>
+        <a href="#" class="block py-2 text-gray-600 hover:text-pink-500">Giới Thiệu</a>
+        <a href="#" class="block py-2 text-gray-600 hover:text-pink-500">Sản Phẩm</a>
+        <a href="#" class="block py-2 text-gray-600 hover:text-pink-500">Liên Hệ</a>
+
+        <!-- Logic for Login/Logout on Mobile -->
+        <div th:if="${session.user == null}" class="mt-4">
+            <a th:href="@{/login}" class="btn-secondary w-full text-center block">Đăng nhập</a>
+        </div>
+        <div th:if="${session.user != null}" class="mt-4 border-t pt-4">
+            <p class="text-center text-gray-700 mb-2">Chào, <span th:text="${session.user.accountName}"></span>!</p>
+            <a th:href="@{/logout}" class="btn-secondary w-full text-center block">Đăng xuất</a>
+        </div>
+
+        <a href="#" class="mt-2 btn-primary w-full text-center">Đặt Hàng</a>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main>
+    <!-- Hero Banner Section -->
+    <section class="relative h-[60vh] md:h-[80vh] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?q=80&w=2070&auto=format&fit=crop');">
+        <div class="absolute inset-0 bg-black/30"></div>
+        <div class="relative container mx-auto px-6 h-full flex flex-col justify-center items-start text-white">
+            <h1 class="font-playfair text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-4">Vẻ Đẹp Tinh Khôi Từ Những Bông Hoa</h1>
+            <p class="text-lg md:text-xl max-w-lg mb-8">Miễn phí giao hàng 7km & Tặng thiệp thiết kế trị giá 50.000đ.</p>
+            <div>
+                <a href="#featured-products" class="btn-primary text-lg px-8 py-3">Xem Sản Phẩm</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section id="featured-products" class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title">Sản Phẩm Nổi Bật</h2>
+            <p class="section-subtitle">Những bó hoa, lẵng hoa được yêu thích nhất tại cửa hàng chúng tôi, được tạo nên từ những bông hoa tươi thắm và tràn đầy ý nghĩa.</p>
+
+            <!-- Products Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Product Card 1: Bó hoa hồng pastel -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1533616688484-4b4a69317578?q=80&w=1887&auto=format&fit=crop" alt="Bó hoa hồng pastel" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="btn-secondary">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-xl text-gray-800 mb-2">Tình Yêu Ngọt Ngào</h3>
+                        <p class="text-pink-500 font-semibold">750.000đ</p>
+                    </div>
+                </div>
+
+                <!-- Product Card 2: Chậu lan hồ điệp trắng -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1567696153748-c4882b5b5b81?q=80&w=1887&auto=format&fit=crop" alt="Chậu lan hồ điệp trắng" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="btn-secondary">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-xl text-gray-800 mb-2">Lan Hồ Điệp Tinh Khôi</h3>
+                        <p class="text-pink-500 font-semibold">2.500.000đ</p>
+                    </div>
+                </div>
+
+                <!-- Product Card 3: Bó hoa hướng dương -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1599421493390-0164841334a6?q=80&w=1887&auto=format&fit=crop" alt="Bó hoa hướng dương" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="btn-secondary">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-xl text-gray-800 mb-2">Nắng Vàng Rực Rỡ</h3>
+                        <p class="text-pink-500 font-semibold">600.000đ</p>
+                    </div>
+                </div>
+
+                <!-- Product Card 4: Lẵng Hoa Yêu Thương -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1579610722331-23b3a4a403ae?q=80&w=1887&auto=format&fit=crop" alt="Lẵng hoa yêu thương" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <button class="btn-secondary">Thêm vào giỏ</button>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-xl text-gray-800 mb-2">Lẵng Hoa Yêu Thương</h3>
+                        <p class="text-pink-500 font-semibold">1.200.000đ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white">
+    <div class="container mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            <!-- About -->
+            <div>
+                <h3 class="font-playfair text-xl font-bold mb-4">TrungHiếu Flower</h3>
+                <p class="text-gray-400">Mang đến những sản phẩm hoa tươi chất lượng nhất cùng dịch vụ chuyên nghiệp, tận tâm.</p>
+            </div>
+            <!-- Quick Links -->
+            <div>
+                <h3 class="font-playfair text-xl font-bold mb-4">Liên kết nhanh</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Về chúng tôi</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Chính sách giao hàng</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Câu hỏi thường gặp</a></li>
+                </ul>
+            </div>
+            <!-- Contact -->
+            <div>
+                <h3 class="font-playfair text-xl font-bold mb-4">Liên hệ</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li><i class="fas fa-map-marker-alt mr-2"></i> 123 Đường Hoa, Quận 1, TP. HCM</li>
+                    <li><i class="fas fa-phone-alt mr-2"></i> 0988 978 445</li>
+                    <li><i class="fas fa-envelope mr-2"></i> contact@trunghieuflower.com</li>
+                </ul>
+                <div class="flex justify-center md:justify-start space-x-4 mt-4">
+                    <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white text-2xl"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-500 text-sm">
+            <p>&copy; 2024 TrungHiếu Flower Shop. Thiết kế với <i class="fas fa-heart text-pink-500"></i>.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // JavaScript for mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>
+
+</body>
+</html>

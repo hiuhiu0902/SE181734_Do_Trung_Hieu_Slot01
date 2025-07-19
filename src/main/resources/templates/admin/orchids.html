@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản Lý Hoa Lan - Admin Dashboard</title>
+
+  <!-- Tải Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tải Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tải thư viện Icons (Feather Icons) -->
+  <script src="https://unpkg.com/feather-icons"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Playfair Display', serif;
+    }
+    /* Tùy chỉnh thanh cuộn */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #a855f7; /* purple-500 */
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #9333ea; /* purple-600 */
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<div class="flex h-screen">
+  <!-- Sidebar (Thanh điều hướng) - Giữ nguyên từ dashboard -->
+  <aside class="w-72 bg-white shadow-lg flex flex-col transition-all duration-300 ease-in-out hidden md:flex">
+    <!-- Logo -->
+    <div class="h-20 flex items-center justify-center border-b">
+      <h2 class="text-2xl font-bold text-purple-800 font-display">Admin Dashboard</h2>
+    </div>
+
+    <!-- Menu -->
+    <nav class="flex-1 px-4 py-6 space-y-2">
+      <a th:href="@{/admin}" class="flex items-center px-4 py-3 text-gray-600 hover:bg-purple-100 hover:text-purple-800 rounded-lg transition-colors font-medium">
+        <i data-feather="home" class="w-5 h-5 mr-3"></i>
+        Tổng quan
+      </a>
+      <!-- Đánh dấu mục này là active -->
+      <a th:href="@{/admin/orchids}" class="flex items-center px-4 py-3 text-white bg-purple-700 rounded-lg font-semibold shadow-md">
+        <i data-feather="package" class="w-5 h-5 mr-3"></i>
+        Quản lý Hoa Lan
+      </a>
+      <a th:href="@{/admin/categories}" class="flex items-center px-4 py-3 text-gray-600 hover:bg-purple-100 hover:text-purple-800 rounded-lg transition-colors font-medium">
+        <i data-feather="layers" class="w-5 h-5 mr-3"></i>
+        Quản lý Categories
+      </a>
+      <a th:href="@{/admin/users}" class="flex items-center px-4 py-3 text-gray-600 hover:bg-purple-100 hover:text-purple-800 rounded-lg transition-colors font-medium">
+        <i data-feather="users" class="w-5 h-5 mr-3"></i>
+        Quản lý Người dùng
+      </a>
+    </nav>
+
+    <!-- Logout -->
+    <div class="p-4 border-t">
+      <a th:href="@{/logout}" class="flex items-center px-4 py-3 text-red-500 hover:bg-red-100 rounded-lg transition-colors font-medium">
+        <i data-feather="log-out" class="w-5 h-5 mr-3"></i>
+        Đăng Xuất
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content (Nội dung chính) -->
+  <main class="flex-1 flex flex-col overflow-y-auto">
+    <!-- Header -->
+    <header class="h-20 bg-white shadow-sm flex items-center justify-between px-6 sticky top-0 z-10">
+      <div class="font-semibold text-xl">Quản lý Hoa Lan</div>
+      <div class="flex items-center space-x-3">
+        <img src="https://placehold.co/40x40/E9D5FF/9333EA?text=A" alt="Avatar" class="w-10 h-10 rounded-full">
+        <div>
+          <p class="font-semibold text-sm">Admin</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="p-6 md:p-8">
+      <!-- Orchid Management Table -->
+      <div class="bg-white p-6 md:p-8 rounded-2xl shadow-md">
+        <!-- Table Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+          <div>
+            <h3 class="text-2xl font-bold font-display text-purple-800">Danh sách Hoa Lan</h3>
+            <p class="text-gray-500 mt-1">Tất cả sản phẩm hoa lan trong cửa hàng.</p>
+          </div>
+          <a th:href="@{/admin/orchids/add}">
+            <button class="bg-purple-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-800 flex items-center transition-transform transform hover:scale-105 shadow-md">
+              <i data-feather="plus" class="w-5 h-5 mr-2"></i> Thêm mới Hoa Lan
+            </button>
+          </a>
+        </div>
+
+        <!-- Table container -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead>
+            <tr class="border-b bg-gray-50">
+              <th class="p-4 text-sm font-semibold text-gray-600">Tên sản phẩm</th>
+              <th class="p-4 text-sm font-semibold text-gray-600">Giá</th>
+              <th class="p-4 text-sm font-semibold text-gray-600">Phân loại</th>
+              <th class="p-4 text-sm font-semibold text-gray-600">Nguồn gốc</th>
+              <th class="p-4 text-sm font-semibold text-gray-600">Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Dữ liệu mẫu, sẽ được thay thế bằng vòng lặp của Thymeleaf -->
+            <tr th:each="orchid : ${orchids}" class="border-b hover:bg-gray-50">
+              <td class="p-4">
+                <div class="flex items-center space-x-4">
+                  <img th:src="@{'/uploads/' + ${orchid.orchidUrl}}"
+                       onerror="this.onerror=null;this.src='https://placehold.co/80x80/f3e8ff/a855f7?text=Orchid';"
+                       alt="Ảnh hoa lan"
+                       class="w-16 h-16 md:w-20 md:h-20 object-cover rounded-lg shadow-sm">
+                  <div>
+                    <p class="font-semibold" th:text="${orchid.orchidName}"></p>
+                    <p class="text-sm text-gray-500 max-w-xs truncate" th:text="${orchid.orchidDescription}"></p>
+                  </div>
+                </div>
+              </td>
+              <td class="p-4 font-semibold text-purple-700" th:text="${#numbers.formatDecimal(orchid.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+              <td class="p-4 text-gray-600" th:text="${orchid.category.categoryName}"></td>
+              <td class="p-4">
+                <span th:if="${orchid.isNatural}" class="px-3 py-1 text-xs font-semibold text-green-800 bg-green-200 rounded-full">Tự nhiên</span>
+                <span th:unless="${orchid.isNatural}" class="px-3 py-1 text-xs font-semibold text-indigo-800 bg-indigo-200 rounded-full">Nhân tạo</span>
+              </td>
+              <td class="p-4">
+                <div class="flex space-x-2">
+                  <a th:href="@{'/admin/orchids/edit/' + ${orchid.orchidId}}" class="text-blue-500 hover:text-blue-700 p-2 bg-blue-100 hover:bg-blue-200 rounded-md">
+                    <i data-feather="edit-2" class="w-5 h-5"></i>
+                  </a>
+                  <a th:href="@{'/admin/orchids/delete/' + ${orchid.orchidId}}"
+                     onclick="return confirm('Bạn có chắc muốn xóa hoa lan này?');"
+                     class="text-red-500 hover:text-red-700 p-2 bg-red-100 hover:bg-red-200 rounded-md">
+                    <i data-feather="trash-2" class="w-5 h-5"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            <!-- Trường hợp không có dữ liệu -->
+            <tr th:if="${#lists.isEmpty(orchids)}">
+              <td colspan="5" class="text-center p-8 text-gray-500">
+                <div class="flex flex-col items-center">
+                  <i data-feather="cloud-off" class="w-16 h-16 text-gray-300 mb-4"></i>
+                  <p class="font-semibold">Chưa có hoa lan nào!</p>
+                  <p class="text-sm">Hãy bắt đầu bằng cách thêm một sản phẩm mới.</p>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  // Kích hoạt Feather Icons
+  feather.replace();
+</script>
+</body>
+</html>

@@ -37,4 +37,8 @@ public class AccountServiceImpl implements AccountService {
     public void delete(int id) {
         accountRepository.deleteById(id);
     }
+
+    public Account findByEmail(String email) {
+        return accountRepository.findByEmail(email);  // Tìm tài khoản theo email
+    }
 }

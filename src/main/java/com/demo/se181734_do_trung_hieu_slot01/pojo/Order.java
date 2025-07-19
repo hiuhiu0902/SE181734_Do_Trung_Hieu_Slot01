@@ -1,7 +1,6 @@
 package com.demo.se181734_do_trung_hieu_slot01.pojo;
 
 import jakarta.persistence.*;
-
 import java.util.Date;
 import java.util.Set;
 
@@ -10,21 +9,23 @@ import java.util.Set;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
-    public Account account;
+    private Account account;
 
     @Temporal(TemporalType.TIMESTAMP)
-    public Date orderDate;
+    private Date orderDate;
 
-    public String orderStatus;
-    public Double totalAmount;
+    private String orderStatus;
+    private Double totalAmount;
 
-    @OneToMany(mappedBy = "order")
-    public Set<OrderDetail> orderDetails;
+    // One-to-many relationship with OrderDetail
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<OrderDetail> orderDetails;
 
+    // Getters and Setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 

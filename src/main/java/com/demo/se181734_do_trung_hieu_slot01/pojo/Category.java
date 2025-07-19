@@ -13,8 +13,8 @@ public class Category {
 
     public String categoryName;
 
-    @OneToMany(mappedBy = "category")
-    public Set<Orchid> orchids;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private Set<Orchid> orchids;
 
     public Integer getCategoryId() { return categoryId; }
     public void setCategoryId(Integer categoryId) { this.categoryId = categoryId; }

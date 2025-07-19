@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Tùy chỉnh thanh cuộn */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a855f7; /* purple-500 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9333ea; /* purple-600 */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<div class="flex h-screen">
+    <!-- Sidebar (Thanh điều hướng) -->
+    <aside class="w-72 bg-white shadow-lg flex flex-col transition-all duration-300 ease-in-out hidden md:flex">
+        <!-- Logo -->
+        <div class="h-20 flex items-center justify-center border-b">
+            <h2 class="text-2xl font-bold text-purple-800 font-display">Admin Dashboard</h2>
+        </div>
+
+        <!-- Menu -->
+        <nav class="flex-1 px-4 py-6 space-y-2">
+            <a th:href="@{/admin}" class="flex items-center px-4 py-3 text-gray-600 hover:bg-purple-100 hover:text-purple-800 rounded-lg transition-colors font-medium">
+                <i data-feather="home" class="w-5 h-5 mr-3"></i>
+                Tổng quan
+            </a>
+            <a th:href="@{/admin/orchids}" class="flex items-center px-4 py-3 text-gray-600 hover:bg-purple-100 hover:text-purple-800 rounded-lg transition-colors font-medium">
+                <i data-feather="package" class="w-5 h-5 mr-3"></i>
+                Quản lý Hoa Lan
+            </a>
+            <a th:href="@{/admin/categories}" class="flex items-center px-4 py-3 text-gray-600 hover:bg-purple-100 hover:text-purple-800 rounded-lg transition-colors font-medium">
+                <i data-feather="layers" class="w-5 h-5 mr-3"></i>
+                Quản lý Categories
+            </a>
+            <a th:href="@{/admin/users}" class="flex items-center px-4 py-3 text-white bg-purple-700 rounded-lg font-semibold shadow-md">
+                <i data-feather="users" class="w-5 h-5 mr-3"></i>
+                Quản lý Người dùng
+            </a>
+        </nav>
+
+        <!-- Logout -->
+        <div class="p-4 border-t">
+            <a th:href="@{/logout}" class="flex items-center px-4 py-3 text-red-500 hover:bg-red-100 rounded-lg transition-colors font-medium">
+                <i data-feather="log-out" class="w-5 h-5 mr-3"></i>
+                Đăng Xuất
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content (Nội dung chính) -->
+    <main class="flex-1 flex flex-col overflow-y-auto">
+        <!-- Header -->
+        <header class="h-20 bg-white shadow-sm flex items-center justify-between px-6 sticky top-0 z-10">
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-gray-600">
+                <i data-feather="menu" class="w-6 h-6"></i>
+            </button>
+            <div class="font-semibold text-xl">Quản lý Người dùng</div>
+            <!-- Profile -->
+            <div class="flex items-center space-x-3">
+                <img src="https://placehold.co/40x40/E9D5FF/9333EA?text=A" alt="Avatar" class="w-10 h-10 rounded-full">
+                <div>
+                    <p class="font-semibold text-sm">Admin</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="p-6 md:p-8">
+            <!-- User Management Table -->
+            <div class="bg-white p-6 md:p-8 rounded-2xl shadow-md">
+                <!-- Table Header -->
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                    <div>
+                        <h3 class="text-2xl font-bold font-display text-purple-800">Danh sách Người dùng</h3>
+                        <p class="text-gray-500 mt-1">Quản lý tất cả tài khoản trong hệ thống.</p>
+                    </div>
+                    <button class="bg-purple-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-800 flex items-center transition-transform transform hover:scale-105 shadow-md">
+                        <i data-feather="plus" class="w-5 h-5 mr-2"></i> Thêm người dùng
+                    </button>
+                </div>
+
+                <!-- Table container -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                        <tr class="border-b bg-gray-50">
+                            <th class="p-4 text-sm font-semibold text-gray-600">Tên</th>
+                            <th class="p-4 text-sm font-semibold text-gray-600">Vai trò</th>
+                            <th class="p-4 text-sm font-semibold text-gray-600">Trạng thái</th>
+                            <th class="p-4 text-sm font-semibold text-gray-600">Ngày tham gia</th>
+                            <th class="p-4 text-sm font-semibold text-gray-600">Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Fake User 1 -->
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://placehold.co/40x40/c4b5fd/4c1d95?text=NA" alt="Avatar" class="w-10 h-10 rounded-full">
+                                    <div>
+                                        <p class="font-semibold">Nguyễn Văn An</p>
+                                        <p class="text-sm text-gray-500">an.nguyen@example.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4 text-gray-600">Quản trị viên</td>
+                            <td class="p-4"><span class="px-3 py-1 text-xs font-semibold text-green-800 bg-green-200 rounded-full">Hoạt động</span></td>
+                            <td class="p-4 text-gray-600">15/07/2025</td>
+                            <td class="p-4">
+                                <div class="flex space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 p-1"><i data-feather="edit-2" class="w-5 h-5"></i></button>
+                                    <button class="text-red-500 hover:text-red-700 p-1"><i data-feather="trash-2" class="w-5 h-5"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Fake User 2 -->
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://placehold.co/40x40/f9a8d4/86198f?text=TB" alt="Avatar" class="w-10 h-10 rounded-full">
+                                    <div>
+                                        <p class="font-semibold">Trần Thị Bích</p>
+                                        <p class="text-sm text-gray-500">bich.tran@example.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4 text-gray-600">Người dùng</td>
+                            <td class="p-4"><span class="px-3 py-1 text-xs font-semibold text-green-800 bg-green-200 rounded-full">Hoạt động</span></td>
+                            <td class="p-4 text-gray-600">12/06/2025</td>
+                            <td class="p-4">
+                                <div class="flex space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 p-1"><i data-feather="edit-2" class="w-5 h-5"></i></button>
+                                    <button class="text-red-500 hover:text-red-700 p-1"><i data-feather="trash-2" class="w-5 h-5"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Fake User 3 -->
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://placehold.co/40x40/a5b4fc/3730a3?text=LC" alt="Avatar" class="w-10 h-10 rounded-full">
+                                    <div>
+                                        <p class="font-semibold">Lê Hoàng Cường</p>
+                                        <p class="text-sm text-gray-500">cuong.le@example.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4 text-gray-600">Người dùng</td>
+                            <td class="p-4"><span class="px-3 py-1 text-xs font-semibold text-red-800 bg-red-200 rounded-full">Bị khóa</span></td>
+                            <td class="p-4 text-gray-600">01/05/2025</td>
+                            <td class="p-4">
+                                <div class="flex space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 p-1"><i data-feather="edit-2" class="w-5 h-5"></i></button>
+                                    <button class="text-red-500 hover:text-red-700 p-1"><i data-feather="trash-2" class="w-5 h-5"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Fake User 4 -->
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-4">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://placehold.co/40x40/fbcfe8/9d266f?text=PD" alt="Avatar" class="w-10 h-10 rounded-full">
+                                    <div>
+                                        <p class="font-semibold">Phạm Thị Dung</p>
+                                        <p class="text-sm text-gray-500">dung.pham@example.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4 text-gray-600">Người dùng</td>
+                            <td class="p-4"><span class="px-3 py-1 text-xs font-semibold text-green-800 bg-green-200 rounded-full">Hoạt động</span></td>
+                            <td class="p-4 text-gray-600">20/04/2025</td>
+                            <td class="p-4">
+                                <div class="flex space-x-2">
+                                    <button class="text-blue-500 hover:text-blue-700 p-1"><i data-feather="edit-2" class="w-5 h-5"></i></button>
+                                    <button class="text-red-500 hover:text-red-700 p-1"><i data-feather="trash-2" class="w-5 h-5"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    // Kích hoạt Feather Icons
+    feather.replace();
+</script>
+</body>
+</html>
